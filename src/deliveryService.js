@@ -58,6 +58,7 @@ export async function fetchDeliveries(baseUrl, options = {}) {
       if (!res.ok) {
         throw new TypeError("URL failure");
       }
+      console.log(res.json());
       return res.json();
     })
     .catch(() => {
