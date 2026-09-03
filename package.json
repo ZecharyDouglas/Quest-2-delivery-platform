@@ -1,0 +1,8 @@
+{
+  "name": "quest-2-delivery-platform",
+  "version": "1.0.0",
+  "description": "Quest 2: Delivery Platform",
+  "type": "module",
+  "scripts": { "test": "node --test" },
+  "engines": { "node": ">=18" }
+}
