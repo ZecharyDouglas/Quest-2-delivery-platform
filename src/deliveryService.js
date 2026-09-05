@@ -43,7 +43,7 @@ export async function fetchDrivers(baseUrl) {
     throw new TypeError("Could not fetch data succesfully.");
   }
   const data = await response.json();
-  console.log(data);
+  //console.log(data);
   return data;
 }
 
@@ -82,6 +82,15 @@ export function createDrivers(records) {
  */
 export function attachDeliveries(drivers, deliveries) {
   // TODO
+  const deliveryRecs = drivers.map((dr) => {
+    const del_arr = deliveries.filter((d) => d.driverId === dr.id);
+    return {
+      driver: dr,
+      deliveries: del_arr,
+    };
+  });
+  console.log(deliveryRecs);
+  return deliveryRecs;
 }
 
 /**
@@ -89,6 +98,26 @@ export function attachDeliveries(drivers, deliveries) {
  */
 export function summarizeDriver(driverRecord) {
   // TODO
+  const summary = {
+    driverId: driverRecord.driver.id,
+    name: driverRecord.driver.name,
+    completedCount: driverRecord.deliveries.reduce(
+      (acc, curr) => (curr.status === "completed" ? (acc += 1) : (acc += 0)),
+      0,
+    ),
+    cancelledCount: driverRecord.deliveries.reduce(
+      (acc, curr) => (curr.status === "cancelled" ? (acc += 1) : (acc += 0)),
+      0,
+    ),
+    totalRevenue: driverRecord.deliveries.reduce(
+      (acc, curr) =>
+        curr.amount && curr.status === "completed"
+          ? (acc += curr.amount)
+          : (acc += 0),
+      0,
+    ),
+  };
+  return summary;
 }
 
 /**

@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "Quest 2: Delivery Platform",
   "type": "module",
-  "scripts": { "test": "node --test" },
-  "engines": { "node": ">=18" }
+  "scripts": {
+    "test": "node --test",
+    "play": "node scratch.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
 }
