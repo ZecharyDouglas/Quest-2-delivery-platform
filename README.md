@@ -15,6 +15,7 @@ Node 18+ required.
 You're implementing the client-side domain layer for a delivery platform.
 
 The mock server exposes:
+
 - `/drivers`
 - `/deliveries`
 
@@ -40,9 +41,11 @@ Your job is to model users and drivers with classes, protect internal state with
 ## Objectives
 
 ### 1. `User`
+
 Create a `User` class.
 
 Constructor:
+
 - `id`
 - `name`
 - `email`
@@ -50,13 +53,16 @@ Constructor:
 Store `email` in a **private field**.
 
 Expose:
+
 - `getEmail()`
 - `updateEmail(newEmail)`
 
 Reject an empty/blank email with an `Error`.
 
 ### 2. `Driver extends User`
+
 Constructor:
+
 - `id`
 - `name`
 - `email`
@@ -64,6 +70,7 @@ Constructor:
 - `startingEarnings = 0`
 
 Requirements:
+
 - inherit from `User`
 - use `super(...)`
 - store earnings in a **private field**
@@ -71,14 +78,17 @@ Requirements:
 - implement `completeDelivery(amount)`
 
 `completeDelivery(amount)` must:
+
 - reject values <= 0
 - add the amount to private earnings
 - return the updated earnings
 
 ### 3. `buildDeliveriesUrl(baseUrl, options)`
+
 Build `/deliveries`.
 
 Optional query parameters:
+
 - `driverId`
 - `status`
 - `limit`
@@ -86,6 +96,7 @@ Optional query parameters:
 Handle whitespace and a trailing slash in `baseUrl`.
 
 ### 4. `fetchDrivers(baseUrl)`
+
 Fetch `/drivers`.
 
 Throw an `Error` for a non-OK response.
@@ -93,6 +104,7 @@ Throw an `Error` for a non-OK response.
 Return parsed JSON.
 
 ### 5. `fetchDeliveries(baseUrl, options)`
+
 Use `buildDeliveriesUrl`.
 
 Throw an `Error` for a non-OK response.
@@ -100,15 +112,16 @@ Throw an `Error` for a non-OK response.
 Return parsed JSON.
 
 ### 6. `createDrivers(records)`
+
 Turn raw driver records into `Driver` instances.
 
 ### 7. `attachDeliveries(drivers, deliveries)`
+
 Return NEW objects shaped like:
 
 ```js
 {
-  driver,
-  deliveries
+  (driver, deliveries);
 }
 ```
 
@@ -117,28 +130,28 @@ Each driver's `deliveries` array should contain only deliveries belonging to tha
 Do not mutate the input arrays.
 
 ### 8. `summarizeDriver(driverRecord)`
+
 Given one object from `attachDeliveries`, return:
 
 ```js
 {
-  driverId,
-  name,
-  completedCount,
-  cancelledCount,
-  totalRevenue
+  (driverId, name, completedCount, cancelledCount, totalRevenue);
 }
 ```
 
 Use array methods rather than manual precomputed values.
 
 ### 9. `rankDriverSummaries(summaries)`
+
 Return a NEW array sorted by:
+
 1. `totalRevenue` descending
 2. `completedCount` descending when revenue ties
 
 Do not mutate the original.
 
 ### 10. `getDriverLeaderboard(baseUrl)`
+
 Orchestrate the complete pipeline:
 
 1. fetch drivers

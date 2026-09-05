@@ -43,7 +43,7 @@ export async function fetchDrivers(baseUrl) {
     throw new TypeError("Could not fetch data succesfully.");
   }
   const data = await response.json();
-  // console.log(data);
+  console.log(data);
   return data;
 }
 
@@ -58,7 +58,7 @@ export async function fetchDeliveries(baseUrl, options = {}) {
       if (!res.ok) {
         throw new TypeError("URL failure");
       }
-      console.log(res.json());
+      //console.log(res.json());
       return res.json();
     })
     .catch(() => {
@@ -71,6 +71,10 @@ export async function fetchDeliveries(baseUrl, options = {}) {
  */
 export function createDrivers(records) {
   // TODO
+  const drivers = records.map((rec) => {
+    return new Driver(rec.id, rec.name, rec.email, rec.vehicle);
+  });
+  return drivers;
 }
 
 /**
