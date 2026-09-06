@@ -89,7 +89,7 @@ export function attachDeliveries(drivers, deliveries) {
       deliveries: del_arr,
     };
   });
-  console.log(deliveryRecs);
+  //console.log(deliveryRecs);
   return deliveryRecs;
 }
 
@@ -125,6 +125,13 @@ export function summarizeDriver(driverRecord) {
  */
 export function rankDriverSummaries(summaries) {
   // TODO
+  const sum_copy = summaries.map((s) => ({ ...s }));
+  sum_copy.sort((a, b) => {
+    if (b.totalRevenue === a.totalRevenue) {
+      return b.completedCount - a.completedCount;
+    } else return b.totalRevenue - a.totalRevenue;
+  });
+  return sum_copy;
 }
 
 /**
@@ -132,4 +139,18 @@ export function rankDriverSummaries(summaries) {
  */
 export async function getDriverLeaderboard(baseUrl) {
   // TODO
+  let drivers = await fetchDrivers(baseUrl);
+  drivers = createDrivers(drivers);
+
+  const deliveries = await fetchDeliveries(baseUrl);
+
+  const attachedDeliveries = attachDeliveries(drivers, deliveries);
+  //summarize each driver
+  const summaries = attachedDeliveries.map((d) => {
+    return summarizeDriver(d);
+  });
+  //rank summaries
+  const ranked_summaries = rankDriverSummaries(summaries);
+  //return the leaderboard
+  return ranked_summaries;
 }
